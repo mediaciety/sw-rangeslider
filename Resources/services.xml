@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="mc_rangeslider.components.property_facet_handler_decorator"
+                 class="McRangeslider\Decorators\PropertyFacetHandlerDecorator"
+                 decorates="shopware_searchdbal.property_facet_handler_dbal"
+                 public="false">
+            <!---argument type="service" id="mc_rangeslider.components.property_facet_handler_decorator.inner"></argument-->
+            <argument type="service" id="shopware_storefront.property_gateway"></argument>
+            <argument type="service" id="shopware_searchdbal.dbal_query_builder_factory"></argument>
+            <argument type="service" id="query_alias_mapper"></argument>
+        </service>
+    </services>
+</container>

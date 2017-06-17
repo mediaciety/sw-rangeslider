@@ -1,0 +1,10 @@
+{
+  "require":{
+    "javiereguiluz/easyslugger" : "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "EasySlugger\\": "vendor/"
+    }
+  }
+}
