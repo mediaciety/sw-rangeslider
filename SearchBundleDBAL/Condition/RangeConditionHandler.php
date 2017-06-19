@@ -9,6 +9,7 @@
 namespace McRangeslider\SearchBundleDBAL\Condition;
 
 
+use Doctrine\DBAL\Connection;
 use Shopware\Bundle\SearchBundle\ConditionInterface;
 use Shopware\Bundle\SearchBundleDBAL\ConditionHandlerInterface;
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
@@ -27,9 +28,10 @@ class RangeConditionHandler implements ConditionHandlerInterface
         )
         {
             if(!$query->hasState($condition->getName())){
-                $this->limitRange($query, $condition);
                 $query->addState($condition->getName());
+                $this->limitRange($query, $condition);
             }
+
         }
 
         private function limitRange(QueryBuilder $query, ConditionInterface $condition){
@@ -57,12 +59,15 @@ class RangeConditionHandler implements ConditionHandlerInterface
                 $queryCriteria = $query;
                 $queryCriteria->andWhere('product.id IN(:validArticleNumbers)');
 
+
                 $ids = [];
                 foreach($valids as $valid){
                     $ids[] = $valid['articleID'];
                 }
 
-                $queryCriteria->setParameter('validArticleNumbers', implode(',', $ids));
+                $queryCriteria->setParameter('validArticleNumbers', $ids, Connection::PARAM_STR_ARRAY);
+                //die(var_dump($queryCriteria->getMaxResults()));
+
             } catch (\Exception $e) {
                 die($e->getMessage());
             }
